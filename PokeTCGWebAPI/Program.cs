@@ -7,6 +7,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Globalization;
 
 namespace PokeTCGWebAPI
 {
@@ -14,11 +15,13 @@ namespace PokeTCGWebAPI
     {
         public static void Main(string[] args)
         {
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("en-GB");
             CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
+                .UseStartup<Startup>()
+            .UseDefaultServiceProvider(options => options.ValidateScopes = false);
     }
 }

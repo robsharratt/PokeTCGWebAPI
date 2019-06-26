@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
+using PokeTCGWebAPI.Models;
 
 namespace PokeTCGWebAPI
 {
@@ -31,8 +33,13 @@ namespace PokeTCGWebAPI
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:PokeTCGDBPSQL"]));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddTransient<ICardTypeRepository, EFCardTypeRepository>();
+			services.AddTransient<ISetRepository, EFSetRepository>();
+
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +58,7 @@ namespace PokeTCGWebAPI
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseStatusCodePages();
 
             app.UseMvc(routes =>
             {
