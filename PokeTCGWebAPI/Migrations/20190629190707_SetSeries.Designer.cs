@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PokeTCGWebAPI.Models;
@@ -9,9 +10,10 @@ using PokeTCGWebAPI.Models;
 namespace PokeTCGWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190629190707_SetSeries")]
+    partial class SetSeries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace PokeTCGWebAPI.Migrations
 
                     b.Property<int>("CardTypeID");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<DateTime>("LastUpdateDate");
 
                     b.Property<int>("SetID");
@@ -58,8 +57,6 @@ namespace PokeTCGWebAPI.Migrations
                     b.HasIndex("SetID");
 
                     b.ToTable("Cards");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Card");
                 });
 
             modelBuilder.Entity("PokeTCGWebAPI.Models.CardCat", b =>
@@ -109,7 +106,7 @@ namespace PokeTCGWebAPI.Migrations
 
                     b.Property<DateTime>("SetReleaseDate");
 
-                    b.Property<int?>("SetSeriesID");
+                    b.Property<int>("SetSeriesID");
 
                     b.Property<bool>("SetStandard");
 
@@ -138,20 +135,6 @@ namespace PokeTCGWebAPI.Migrations
                     b.ToTable("SetSeries");
                 });
 
-            modelBuilder.Entity("PokeTCGWebAPI.Models.SpecialCard", b =>
-                {
-                    b.HasBaseType("PokeTCGWebAPI.Models.Card");
-
-                    b.HasDiscriminator().HasValue("SpecialCard");
-                });
-
-            modelBuilder.Entity("PokeTCGWebAPI.Models.TrainerCard", b =>
-                {
-                    b.HasBaseType("PokeTCGWebAPI.Models.Card");
-
-                    b.HasDiscriminator().HasValue("TrainerCard");
-                });
-
             modelBuilder.Entity("PokeTCGWebAPI.Models.Card", b =>
                 {
                     b.HasOne("PokeTCGWebAPI.Models.CardCat", "CardCat")
@@ -174,7 +157,8 @@ namespace PokeTCGWebAPI.Migrations
                 {
                     b.HasOne("PokeTCGWebAPI.Models.SetSeries", "SetSeries")
                         .WithMany("Sets")
-                        .HasForeignKey("SetSeriesID");
+                        .HasForeignKey("SetSeriesID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

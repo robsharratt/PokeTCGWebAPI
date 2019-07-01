@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace PokeTCGWebAPI.Models
@@ -12,5 +13,7 @@ namespace PokeTCGWebAPI.Models
 
         [DataType(DataType.DateTime)]
         public DateTime LastUpdateDate { get; set; }
+
+        public ICollection<Card> Cards { get; set; }
     }
 }

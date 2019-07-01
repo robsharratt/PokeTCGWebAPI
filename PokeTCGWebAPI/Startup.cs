@@ -35,7 +35,8 @@ namespace PokeTCGWebAPI
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(Configuration["ConnectionStrings:PokeTCGDBPSQL"]));
 
-			services.AddTransient<ICardTypeRepository, EFCardTypeRepository>();
+            services.AddTransient<ICardRepository, EFCardRepository>();
+            services.AddTransient<ICardTypeRepository, EFCardTypeRepository>();
 			services.AddTransient<ISetRepository, EFSetRepository>();
 
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -66,6 +67,7 @@ namespace PokeTCGWebAPI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            SeedData.EnsurePopulated(app);
         }
     }
 }

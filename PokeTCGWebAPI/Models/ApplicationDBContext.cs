@@ -10,8 +10,12 @@ namespace PokeTCGWebAPI.Models
         {
         }
 
-        public DbSet<Card> Cards { get; set; }
+        public DbSet<Card> Cards { get; set;}
+        public DbSet<CardCat> CardCats { get; set; }
         public DbSet<CardType> CardTypes { get; set; }
+        public DbSet<SetSeries> SetSeries { get; set; }
         public DbSet<Set> Sets { get; set; }
+        public DbSet<SpecialCard> SpecialCards { get; set; }
+        public DbSet<TrainerCard> TrainerCards { get; set; }
     }
 }

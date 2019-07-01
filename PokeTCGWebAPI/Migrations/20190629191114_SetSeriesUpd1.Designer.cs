@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PokeTCGWebAPI.Models;
@@ -9,9 +10,10 @@ using PokeTCGWebAPI.Models;
 namespace PokeTCGWebAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190629191114_SetSeriesUpd1")]
+    partial class SetSeriesUpd1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,9 +42,6 @@ namespace PokeTCGWebAPI.Migrations
 
                     b.Property<int>("CardTypeID");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired();
-
                     b.Property<DateTime>("LastUpdateDate");
 
                     b.Property<int>("SetID");
@@ -58,8 +57,6 @@ namespace PokeTCGWebAPI.Migrations
                     b.HasIndex("SetID");
 
                     b.ToTable("Cards");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Card");
                 });
 
             modelBuilder.Entity("PokeTCGWebAPI.Models.CardCat", b =>
@@ -136,20 +133,6 @@ namespace PokeTCGWebAPI.Migrations
                     b.HasKey("SetSeriesID");
 
                     b.ToTable("SetSeries");
-                });
-
-            modelBuilder.Entity("PokeTCGWebAPI.Models.SpecialCard", b =>
-                {
-                    b.HasBaseType("PokeTCGWebAPI.Models.Card");
-
-                    b.HasDiscriminator().HasValue("SpecialCard");
-                });
-
-            modelBuilder.Entity("PokeTCGWebAPI.Models.TrainerCard", b =>
-                {
-                    b.HasBaseType("PokeTCGWebAPI.Models.Card");
-
-                    b.HasDiscriminator().HasValue("TrainerCard");
                 });
 
             modelBuilder.Entity("PokeTCGWebAPI.Models.Card", b =>
