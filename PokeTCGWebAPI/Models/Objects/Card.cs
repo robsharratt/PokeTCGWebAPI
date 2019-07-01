@@ -13,18 +13,18 @@ namespace PokeTCGWebAPI.Models
         public string CardImageHiURL { get; set; }
 
         //Foreign Key for Card Category - Pokemon, Trainer, Energy
-        public int CardCatID { get; set; }
+        public Nullable<int> CardCatID { get; set; }
         public CardCat CardCat { get; set; }
 
         //Foreign Key for Card Type - Basic, Stage 1, Stage 2, etc
-        public int CardTypeID { get; set; }
+        public Nullable<int> CardTypeID { get; set; }
         public CardType CardType { get; set; }
 
         //Foreign Key for Set
-        public int SetID { get; set; }
+        public Nullable<int> SetID { get; set; }
         public Set Set { get; set; }
 
-        public string CardNum { get; set; }
+        public int CardNum { get; set; }
         public string Artist { get; set; }
         public string CardRarity { get; set; }
         [DataType(DataType.DateTime)]

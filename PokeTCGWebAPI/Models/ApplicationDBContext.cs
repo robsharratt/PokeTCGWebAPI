@@ -17,5 +17,6 @@ namespace PokeTCGWebAPI.Models
         public DbSet<Set> Sets { get; set; }
         public DbSet<SpecialCard> SpecialCards { get; set; }
         public DbSet<TrainerCard> TrainerCards { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

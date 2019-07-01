@@ -14,5 +14,7 @@
     <Folder Include="Models\EF\" />
     <Folder Include="Models\Interfaces\" />
     <Folder Include="Models\Objects\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 </Project>
